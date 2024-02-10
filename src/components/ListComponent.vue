@@ -114,7 +114,6 @@ export default {
                 return fuse.search(this.searchQuery).map(result => result.item);
             }
             return this.displayedItems;
-            console.log(this.displayedItems)
         },
     },
     watch: {
