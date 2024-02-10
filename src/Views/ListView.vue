@@ -1,15 +1,19 @@
 <template>
-    <div class="list">
-        <ListComponent :items = "items"/>
-    </div>
+    <div class="list-items"><NavbarComponent /></div>
+    <div class="list"><ListComponent :items = "items"/></div>
+    <div class="list-items"><FooterComponent /></div>
 </template>
 
 <script>
 import axios from "axios";
 import ListComponent from '@/components/ListComponent.vue';
+import NavbarComponent from '@/components/header/NavbarComponent.vue';
+import FooterComponent from '@/components/footer/FooterComponent.vue';
 export default {
     components:{
-        ListComponent
+        ListComponent,
+        NavbarComponent,
+        FooterComponent
     },
     data() {
         return {

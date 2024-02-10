@@ -14,11 +14,12 @@
           </svg>
         </span>
       </div>
+      <h1 class="font-bold text-xl">Countries Catalog Implementation</h1>
       <!-- Navbar Left -->
       <div class="form-search">
-        <form class="flex items-center w-80">   
+        <form class="flex items-center w-80">
           <div class="relative w-full">
-            <input type="text" id="simple-search" class="w-80 text-sm block border-gray-500 border-2 p-2 rounded-lg" placeholder="Search by country name" required>
+            <input v-model="searchQuery" type="text" id="simple-search" class="w-80 text-sm block border-gray-500 border-2 p-2 rounded-lg" placeholder="Search by country name" required>
           </div>
         </form>
       </div>

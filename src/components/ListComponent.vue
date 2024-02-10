@@ -12,11 +12,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in displayedItems" :key="index" class="hover:bg-gray-100 lg:text-lg md:text-lg text-xs">
+                    <tr v-for="(item, index) in filteredItems" :key="index" class="hover:bg-gray-100 lg:text-lg md:text-lg text-xs">
                         <td class="border border-gray-400 py-2">{{ index + 1 }}</td>
                         <td class="border border-gray-400 py-2">{{ item.idd.root }}</td>
                         <td class="flex justify-center border border-gray-400 py-2">
-                            <img :src="item.flags.png" alt="flags" class="w-20 h-10">
+                        <img :src="item.flags.png" alt="flags" class="w-20 h-10">
                         </td>
                         <td @click="openDialog(item)" class="border border-gray-400 py-2 cursor-pointer">{{ item.name.official }}</td>
                         <!-- modal -->
@@ -38,24 +38,27 @@
 </template>
 
 <script>
+import Fuse from 'fuse.js';
 import ModalComponent from './ModalComponent.vue';
+
 export default {
     props: {
-        items: Array
+        items: Array,
     },
-    components:{
-        ModalComponent
+    components: {
+        ModalComponent,
     },
-    data(){
+    data() {
         return {
             pageRow: 25,
             currentPage: 1,
             dialogView: false,
-            selectedItem: null
-        }
+            selectedItem: null,
+            searchQuery: '',
+        };
     },
     methods: {
-        // pagination 
+        // pagination
         previousPage() {
             if (this.currentPage > 1) {
                 this.currentPage--;
@@ -66,17 +69,17 @@ export default {
                 this.currentPage++;
             }
         },
-        // Modal 
+        // Modal
         openDialog(item) {
             this.selectedItem = item;
-                this.dialogView = true;
-            },
-            closeDialog() {
-                this.dialogView = false;
+            this.dialogView = true;
+        },
+        closeDialog() {
+            this.dialogView = false;
         },
     },
     computed: {
-        // Order by ASC 
+        // Order by ASC
         sortedItems() {
             const sortedArray = this.items.slice();
             return sortedArray.sort((a, b) => {
@@ -91,7 +94,7 @@ export default {
                 return 0;
             });
         },
-        // Pagination 
+        // Pagination
         totalPages() {
             return Math.ceil(this.sortedItems.length / this.pageRow);
         },
@@ -99,6 +102,24 @@ export default {
             const startIndex = (this.currentPage - 1) * this.pageRow;
             const endIndex = startIndex + this.pageRow;
             return this.sortedItems.slice(startIndex, endIndex);
+        },
+        // fuzzy
+        filteredItems() {
+            if (this.searchQuery) {
+                const options = {
+                    keys: ['item.name.official'],
+                    threshold: 0.4,
+                };
+                const fuse = new Fuse(this.displayedItems, options);
+                return fuse.search(this.searchQuery).map(result => result.item);
+            }
+            return this.displayedItems;
+            console.log(this.displayedItems)
+        },
+    },
+    watch: {
+        searchQuery() {
+            this.currentPage = 1;
         },
     },
 };

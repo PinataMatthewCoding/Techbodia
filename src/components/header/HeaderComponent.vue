@@ -1,5 +1,5 @@
 <template>
-  <div class="header z-20 text-white bg-pink-600 lg:block lg:py-0 py-2 font-kantumruy font-light mx-auto">
+  <div class="header text-white bg-pink-600 lg:block font-kantumruy font-light mx-auto">
     <div class="flex justify-between w-11/12 min-[2000px]:container mx-auto p-2 md:ml-14">
       <div class="flex">
         <a href="mailto:register@kit.edu.kh" class="flex items-center text-white" target="_blank">
