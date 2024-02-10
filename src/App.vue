@@ -1,12 +1,25 @@
 <template>
-  <h1 class="text-3xl text-center my-8 font-bold text-pink-600">
+  <div class="header"><HeaderComponent/></div>
+  <div class="list-items"><NavbarComponent /></div>
+  <div class="text-content text-center text-2xl font-bold">
     Countries Catalog Implementation
-  </h1>
+  </div>
+  <div class="list-items mt-5"><ListView /></div>
+  <div class="list-items"><FooterComponent /></div>
 </template>
 
 <script>
+import ListView from "./Views/ListView.vue";
+import HeaderComponent from "@/components/header/HeaderComponent.vue";
+import NavbarComponent from './components/header/NavbarComponent.vue';
+import FooterComponent from './components/footer/FooterComponent.vue';
 
 export default {
-  name: 'App',
-}
+  components:{
+    ListView,
+    HeaderComponent,
+    NavbarComponent,
+    FooterComponent
+  },
+};
 </script>
